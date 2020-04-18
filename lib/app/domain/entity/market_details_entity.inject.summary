@@ -1,0 +1,8 @@
+{
+  "asset": "asset:crypto_currency/lib/app/domain/entity/market_details_entity.dart",
+  "summary": {
+    "injector": [],
+    "module": [],
+    "injectable": []
+  }
+}

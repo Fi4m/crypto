@@ -1,0 +1,34 @@
+{
+  "asset": "asset:crypto_currency/lib/app/data/service/fetch_market_details_service.dart",
+  "summary": {
+    "injector": [],
+    "module": [],
+    "injectable": [
+      {
+        "name": "FetchMarketDetailsService",
+        "constructor": {
+          "name": "",
+          "kind": "constructor",
+          "injectedType": {
+            "lookupKey": {
+              "root": "asset:crypto_currency/lib/app/data/service/fetch_market_details_service.dart#FetchMarketDetailsService",
+              "qualifier": null
+            },
+            "isProvider": false
+          },
+          "singleton": false,
+          "asynchronous": false,
+          "dependencies": [
+            {
+              "lookupKey": {
+                "root": "asset:crypto_currency/lib/networking/network_manager.dart#NetworkManager",
+                "qualifier": null
+              },
+              "isProvider": false
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

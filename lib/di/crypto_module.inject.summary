@@ -1,0 +1,94 @@
+{
+  "asset": "asset:crypto_currency/lib/di/crypto_module.dart",
+  "summary": {
+    "injector": [],
+    "module": [
+      {
+        "name": "CryptoModule",
+        "providers": [
+          {
+            "name": "fetchMarketDetailsService",
+            "kind": "method",
+            "injectedType": {
+              "lookupKey": {
+                "root": "asset:crypto_currency/lib/app/data/service/fetch_market_details_service.dart#FetchMarketDetailsService",
+                "qualifier": null
+              },
+              "isProvider": false
+            },
+            "singleton": true,
+            "asynchronous": false,
+            "dependencies": []
+          },
+          {
+            "name": "repository",
+            "kind": "method",
+            "injectedType": {
+              "lookupKey": {
+                "root": "asset:crypto_currency/lib/app/domain/domain_repo.dart#DomainRepo",
+                "qualifier": null
+              },
+              "isProvider": false
+            },
+            "singleton": true,
+            "asynchronous": false,
+            "dependencies": [
+              {
+                "lookupKey": {
+                  "root": "asset:crypto_currency/lib/app/data/service/fetch_market_details_service.dart#FetchMarketDetailsService",
+                  "qualifier": null
+                },
+                "isProvider": false
+              }
+            ]
+          },
+          {
+            "name": "fetchMarketDetailsUseCase",
+            "kind": "method",
+            "injectedType": {
+              "lookupKey": {
+                "root": "asset:crypto_currency/lib/app/domain/use_case/fetch_market_details_use_case.dart#FetchMarketDetailsUseCase",
+                "qualifier": null
+              },
+              "isProvider": false
+            },
+            "singleton": true,
+            "asynchronous": false,
+            "dependencies": [
+              {
+                "lookupKey": {
+                  "root": "asset:crypto_currency/lib/app/domain/domain_repo.dart#DomainRepo",
+                  "qualifier": null
+                },
+                "isProvider": false
+              }
+            ]
+          },
+          {
+            "name": "currencyListBloc",
+            "kind": "method",
+            "injectedType": {
+              "lookupKey": {
+                "root": "asset:crypto_currency/lib/app/presentation/currency_list/currency_list_bloc.dart#CurrencyListBloc",
+                "qualifier": null
+              },
+              "isProvider": false
+            },
+            "singleton": false,
+            "asynchronous": false,
+            "dependencies": [
+              {
+                "lookupKey": {
+                  "root": "asset:crypto_currency/lib/app/domain/use_case/fetch_market_details_use_case.dart#FetchMarketDetailsUseCase",
+                  "qualifier": null
+                },
+                "isProvider": false
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "injectable": []
+  }
+}

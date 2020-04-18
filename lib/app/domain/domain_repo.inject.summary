@@ -1,0 +1,26 @@
+{
+  "asset": "asset:crypto_currency/lib/app/domain/domain_repo.dart",
+  "summary": {
+    "injector": [],
+    "module": [],
+    "injectable": [
+      {
+        "name": "DomainRepo",
+        "constructor": {
+          "name": "",
+          "kind": "constructor",
+          "injectedType": {
+            "lookupKey": {
+              "root": "asset:crypto_currency/lib/app/domain/domain_repo.dart#DomainRepo",
+              "qualifier": null
+            },
+            "isProvider": false
+          },
+          "singleton": false,
+          "asynchronous": false,
+          "dependencies": []
+        }
+      }
+    ]
+  }
+}

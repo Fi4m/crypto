@@ -1,0 +1,8 @@
+{
+  "asset": "asset:crypto_currency/lib/app/base/base_bloc.dart",
+  "summary": {
+    "injector": [],
+    "module": [],
+    "injectable": []
+  }
+}

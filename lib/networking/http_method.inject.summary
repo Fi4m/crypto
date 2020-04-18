@@ -1,0 +1,8 @@
+{
+  "asset": "asset:crypto_currency/lib/networking/http_method.dart",
+  "summary": {
+    "injector": [],
+    "module": [],
+    "injectable": []
+  }
+}

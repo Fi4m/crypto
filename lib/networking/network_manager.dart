@@ -8,12 +8,8 @@ import 'package:data_connection_checker/data_connection_checker.dart';
 class NetworkManager {
 
   static final NetworkManager _singleton = NetworkManager._internal();
-
   factory NetworkManager() => _singleton;
-
   NetworkManager._internal();
-
-
 
   final _baseUrl = "https://api.coindcx.com/";
   final _client = Client();

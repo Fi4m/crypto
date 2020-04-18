@@ -1,0 +1,8 @@
+{
+  "asset": "asset:crypto_currency/lib/networking/network_manager.dart",
+  "summary": {
+    "injector": [],
+    "module": [],
+    "injectable": []
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "asset": "asset:crypto_currency/lib/app/presentation/currency_list/currency_list_bloc.dart",
+  "summary": {
+    "injector": [],
+    "module": [],
+    "injectable": [
+      {
+        "name": "CurrencyListBloc",
+        "constructor": {
+          "name": "",
+          "kind": "constructor",
+          "injectedType": {
+            "lookupKey": {
+              "root": "asset:crypto_currency/lib/app/presentation/currency_list/currency_list_bloc.dart#CurrencyListBloc",
+              "qualifier": null
+            },
+            "isProvider": false
+          },
+          "singleton": false,
+          "asynchronous": false,
+          "dependencies": [
+            {
+              "lookupKey": {
+                "root": "asset:crypto_currency/lib/app/domain/use_case/fetch_market_details_use_case.dart#FetchMarketDetailsUseCase",
+                "qualifier": null
+              },
+              "isProvider": false
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,5 +1,3 @@
-
-
 enum EndPoint {
   fetchMarketDetails
 }
@@ -9,5 +7,7 @@ class EndPointHelper {
     switch (endPoint) {
       case EndPoint.fetchMarketDetails: return "exchange/v1/markets_details/";
     }
+
+    return "";
   }
 }
