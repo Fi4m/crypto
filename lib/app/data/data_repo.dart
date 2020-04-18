@@ -10,7 +10,7 @@ class DataRepo extends DomainRepo {
   @provide
   DataRepo(this.fetchMarketDetailsService);
 
-  Future<List<MarketDetailsEntity>> fetchMarketDetails() {
+  Future<MarketDetailsEntity> fetchMarketDetails() {
     return fetchMarketDetailsService.fetchMarketDetails();
   }
 }

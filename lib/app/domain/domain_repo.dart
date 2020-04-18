@@ -3,5 +3,5 @@ import 'package:inject/inject.dart';
 
 @provide
 abstract class DomainRepo {
-  Future<List<MarketDetailsEntity>> fetchMarketDetails();
+  Future<MarketDetailsEntity> fetchMarketDetails();
 }

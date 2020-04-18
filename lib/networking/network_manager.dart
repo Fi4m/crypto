@@ -11,7 +11,7 @@ class NetworkManager {
   factory NetworkManager() => _singleton;
   NetworkManager._internal();
 
-  final _baseUrl = "https://api.coindcx.com/";
+  final _baseUrl = "api.coindcx.com";
   final _client = Client();
 
   final _dataConnectionChecker = DataConnectionChecker();

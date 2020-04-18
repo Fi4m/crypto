@@ -10,12 +10,11 @@ class FetchMarketDetailsService {
   @provide
   FetchMarketDetailsService(this.networkManager);
 
-  Future<List<MarketDetailsResponse>> fetchMarketDetails() async {
+  Future<MarketDetailsResponse> fetchMarketDetails() async {
     final response = await networkManager.callAPI(
       method: HTTPMethod.get,
       endPoint: EndPoint.fetchMarketDetails,
     );
-    List<Map<String, dynamic>> temp = List.from(response);
-    return temp.map((map) => MarketDetailsResponse.fromJson(map));
+    return MarketDetailsResponse.fromJson(response);
   }
 }

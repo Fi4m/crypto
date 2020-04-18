@@ -10,7 +10,7 @@ class FetchMarketDetailsUseCase {
   @provide
   FetchMarketDetailsUseCase(this.repo);
 
-  Future<List<MarketDetailsEntity>> fetchMarketDetails() {
+  Future<MarketDetailsEntity> fetchMarketDetails() {
     return repo.fetchMarketDetails();
   }
 }
