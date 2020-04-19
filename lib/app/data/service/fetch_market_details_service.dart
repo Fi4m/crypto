@@ -11,10 +11,16 @@ class FetchMarketDetailsService {
   FetchMarketDetailsService(this.networkManager);
 
   Future<MarketDetailsResponse> fetchMarketDetails() async {
-    final response = await networkManager.callAPI(
-      method: HTTPMethod.get,
-      endPoint: EndPoint.fetchMarketDetails,
-    );
+    final response = await Future.wait([
+      networkManager.callAPI(
+        method: HTTPMethod.get,
+        endPoint: EndPoint.fetchMarketDetails,
+      ),
+      networkManager.callAPI(
+        method: HTTPMethod.get,
+        endPoint: EndPoint.fetchTickers,
+      )
+    ]);
     return MarketDetailsResponse.fromJson(response);
   }
 }
