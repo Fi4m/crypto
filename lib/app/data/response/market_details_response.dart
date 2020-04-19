@@ -1,14 +1,17 @@
-import 'package:crypto_currency/app/base/domain_convertible.dart';
 import 'package:crypto_currency/app/data/response/currency_response.dart';
 import 'package:crypto_currency/app/data/response/ticker_response.dart';
 import 'package:crypto_currency/app/domain/entity/market_details_entity.dart';
-import "package:collection/collection.dart";
 
-class MarketDetailsResponse extends DomainConvertible<MarketDetailsEntity> {
+class MarketDetailsResponse extends MarketDetailsEntity {
   List<CurrencyResponse> currencies;
   List<TickerResponse> tickers;
 
-  MarketDetailsResponse({this.currencies, this.tickers});
+  MarketDetailsResponse({
+    this.currencies,
+    this.tickers
+    }) : super (
+      entities: currencies.map((e) => CurrencyEntity(currency: e, ticker: tickers.firstWhere((o) => o.market == e.coindcxName))).toList()
+    );
       // : super(
       //       markets: groupBy(
       //           currencies, (currency) => currency.baseCurrencyShortName));
@@ -23,17 +26,17 @@ class MarketDetailsResponse extends DomainConvertible<MarketDetailsEntity> {
         );
   }
 
-  @override
-  MarketDetailsEntity asDomain() {
-    // final CurrencyEntity entities = currencies.map((currency) => CurrencyEntity(currency: currency, ticker: tickers.firstWhere((o) => o.market == currency.coindcxName)));
-    List<CurrencyEntity> entities = currencies.map((currency) {
-      String coindcxName = currency.coindcxName;
-      TickerResponse ticker = tickers.firstWhere((o) => o.market == coindcxName);
-      if (ticker == null) 
-        return null;
+  // @override
+  // MarketDetailsEntity asDomain() {
+  //   // final CurrencyEntity entities = currencies.map((currency) => CurrencyEntity(currency: currency, ticker: tickers.firstWhere((o) => o.market == currency.coindcxName)));
+  //   List<CurrencyEntity> entities = currencies.map((currency) {
+  //     String coindcxName = currency.coindcxName;
+  //     TickerResponse ticker = tickers.firstWhere((o) => o.market == coindcxName);
+  //     if (ticker == null) 
+  //       return null;
 
-      return CurrencyEntity(currency: currency, ticker: ticker);
-    }).toList();
-    return MarketDetailsEntity(markets: groupBy(entities, (currency) => currency.baseCurrencyShortName));
-  }
+  //     return CurrencyEntity(currency: currency, ticker: ticker);
+  //   }).toList();
+  //   return MarketDetailsEntity(markets: groupBy(entities, (currency) => currency.baseCurrencyShortName));
+  // }
 }

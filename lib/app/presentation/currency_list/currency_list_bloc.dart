@@ -9,7 +9,6 @@ class CurrencyListBloc extends BaseBloc {
   
   FetchMarketDetailsUseCase fetchMarketDetailsUseCase;
   BehaviorSubject<MarketDetailsEntity> marketDetails;
-  BehaviorSubject<MarketDetailsEntity> filteredResults;
 
   @provide
   CurrencyListBloc(
@@ -20,7 +19,6 @@ class CurrencyListBloc extends BaseBloc {
     try {
       final response = await fetchMarketDetailsUseCase.fetchMarketDetails();
       marketDetails.sink.add(response);
-      filteredResults.sink.add(response);
     } catch (e) {
       print(e);
     }
@@ -29,12 +27,10 @@ class CurrencyListBloc extends BaseBloc {
   @override
   void init() {
     marketDetails = BehaviorSubject<MarketDetailsEntity>();
-    filteredResults = BehaviorSubject<MarketDetailsEntity>();
   }
 
   @override
   void dispose() {
     marketDetails.close();
-    filteredResults.close();
   }
 }

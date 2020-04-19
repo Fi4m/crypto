@@ -12,7 +12,8 @@ class DataRepo extends DomainRepo {
   DataRepo(this.fetchMarketDetailsService);
 
   Future<MarketDetailsEntity> fetchMarketDetails() async {
-    MarketDetailsResponse marketDetailsResponse = await fetchMarketDetailsService.fetchMarketDetails();
-    return marketDetailsResponse.asDomain();
+    return fetchMarketDetailsService.fetchMarketDetails();
+    // MarketDetailsResponse marketDetailsResponse = await fetchMarketDetailsService.fetchMarketDetails();
+    // return marketDetailsResponse.asDomain();
   }
 }
