@@ -38,7 +38,7 @@ class CurrencyDetailSheet extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               fontSize: 16)),
                       SizedBox(width: 4),
-                      Text("(${currency.baseCurrencyShortName})",
+                      Text("(${currency.name})",
                           style: TextStyle(
                               color: Colors.white.withOpacity(0.5),
                               fontSize: 16))
