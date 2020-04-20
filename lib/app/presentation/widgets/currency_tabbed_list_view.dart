@@ -1,7 +1,7 @@
 import 'package:crypto_currency/app/base/images.dart';
 import 'package:crypto_currency/app/domain/entity/market_details_entity.dart';
-import 'package:crypto_currency/app/presentation/currency_list/currency_list_view.dart';
-import 'package:crypto_currency/app/presentation/currency_list/currency_inherited_widget.dart';
+import 'package:crypto_currency/app/presentation/widgets/currency_inherited_widget.dart';
+import 'package:crypto_currency/app/presentation/widgets/currency_list_view.dart';
 import 'package:flutter/material.dart';
 
 class CurrencyTabBar extends StatelessWidget implements PreferredSizeWidget {
@@ -37,7 +37,10 @@ class CurrencyTabbedListView extends StatelessWidget {
 
     return TabBarView(
       controller: CurrencyInheritedWidget.of(context).tabController,
-      children: marketNames.map((key) => CurrencyListView(markets[key])).toList(),
+      children: marketNames.map((key) => CurrencyListView(
+        markets[key],
+        onTap: CurrencyInheritedWidget.of(context).onCurrencyListElementTap
+        )).toList(), 
     );
   }
 }

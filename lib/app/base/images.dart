@@ -5,4 +5,5 @@ class Images {
   static String get icPlaceholder => "assets/images/ic_placeholder.svg";
   static String get icSortAsc => "assets/images/ic_sort_asc.svg";
   static String get icSortDes => "assets/images/ic_sort_des.svg";
+  static String get icSortUnsorted => "assets/images/ic_sort_unsorted.svg";
 }

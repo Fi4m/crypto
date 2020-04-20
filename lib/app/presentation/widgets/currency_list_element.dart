@@ -1,19 +1,20 @@
 import 'package:crypto_currency/app/base/images.dart';
 import 'package:crypto_currency/app/domain/entity/market_details_entity.dart';
-import 'package:crypto_currency/networking/currency_remote_icon.dart';
+import 'package:crypto_currency/app/presentation/widgets/currency_change_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class CurrencyListElement extends StatelessWidget {
   final CurrencyEntity currency;
-  final GestureTapCallback onTap;
+  final void Function(CurrencyEntity) onTap;
 
   CurrencyListElement({this.currency, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: this.onTap,
+      behavior: HitTestBehavior.translucent,
+      onTap: () => this.onTap(currency),
       child: SizedBox(
         height: 44,
         child: Padding(
@@ -33,29 +34,19 @@ class CurrencyListElement extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    currency.name,
+                    currency.targetCurrencyName,
                     style: TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold, fontSize: 13),
                   ),
                   Text(
-                    currency.lastPrice,
+                    "${currency.lastPrice} ${currency.baseCurrencyShortName}",
                     style: TextStyle(
                         color: Colors.white.withOpacity(0.5), fontSize: 10),
                   )
                 ],
               ),
             ),
-            Container(
-              width: 64,
-              height: 28,
-              decoration: BoxDecoration(
-                  color: Colors.green,
-                  borderRadius: BorderRadius.all(Radius.circular(4))),
-              child: Center(
-                child: Text("${currency.change24hour}%",
-                    style: TextStyle(color: Colors.white, fontSize: 12)),
-              ),
-            )
+            CurrencyChangeWidget(currency.change24hour)
           ]),
         ),
       ),

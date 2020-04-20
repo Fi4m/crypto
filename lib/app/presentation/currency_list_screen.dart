@@ -1,9 +1,10 @@
 import 'package:crypto_currency/app/base/images.dart';
 import 'package:crypto_currency/app/domain/entity/market_details_entity.dart';
-import 'package:crypto_currency/app/presentation/currency_list/currency_list_view.dart';
-import 'package:crypto_currency/app/presentation/currency_list/currency_inherited_widget.dart';
-import 'package:crypto_currency/app/presentation/currency_list/currency_list_bloc.dart';
-import 'package:crypto_currency/app/presentation/currency_list/currency_tabbed_list_view.dart';
+import 'package:crypto_currency/app/presentation/currency_list_bloc.dart';
+import 'package:crypto_currency/app/presentation/widgets/currency_detail_sheet.dart';
+import 'package:crypto_currency/app/presentation/widgets/currency_inherited_widget.dart';
+import 'package:crypto_currency/app/presentation/widgets/currency_list_view.dart';
+import 'package:crypto_currency/app/presentation/widgets/currency_tabbed_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -22,6 +23,7 @@ class _CurrencyListScreenState extends State<CurrencyListScreen>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
   _ViewType _viewType = _ViewType.listView;
+
   _toggleView() {
     this.setState(() {
       switch (this._viewType) {
@@ -42,10 +44,18 @@ class _CurrencyListScreenState extends State<CurrencyListScreen>
     this.widget._bloc.init();
     this.widget._bloc.fetchMarketDetails();
     this.widget._bloc.marketDetails.listen((marketDetails) {
-      _tabController =
-          TabController(vsync: this, length: marketDetails.markets.length);
-      this.setState(() {});
+      _tabController = TabController(
+          initialIndex: 0,
+          length: marketDetails.markets.length,
+          vsync: this,);
     });
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    this.widget._bloc.dispose();
+    super.dispose();
   }
 
   @override
@@ -53,6 +63,7 @@ class _CurrencyListScreenState extends State<CurrencyListScreen>
     return CurrencyInheritedWidget(
         tabController: _tabController,
         marketDetails: widget._bloc.marketDetails.value,
+        onCurrencyListElementTap: (entity) => _showCurrencyDetails(entity),
         child: Scaffold(
             appBar: AppBar(
               backgroundColor: Color(0xFF141A2F),
@@ -66,11 +77,15 @@ class _CurrencyListScreenState extends State<CurrencyListScreen>
               ),
               actions: [
                 IconButton(
-                  icon: SvgPicture.asset(this._viewType == _ViewType.tabbedView ? Images.icList : Images.icTabbed),
+                  icon: SvgPicture.asset(this._viewType == _ViewType.tabbedView
+                      ? Images.icList
+                      : Images.icTabbed),
                   onPressed: () => this._toggleView(),
                 )
               ],
-              bottom: this._viewType == _ViewType.tabbedView ? CurrencyTabBar() : null,
+              bottom: this._viewType == _ViewType.tabbedView
+                  ? CurrencyTabBar()
+                  : null,
             ),
             body: Container(
               color: Color(0xFF0D111B),
@@ -90,13 +105,21 @@ class _CurrencyListScreenState extends State<CurrencyListScreen>
                     MarketDetailsEntity marketDetails = snapshot.data;
                     switch (this._viewType) {
                       case _ViewType.listView:
-                        return CurrencyListView(marketDetails.entities);
+                        return CurrencyListView(marketDetails.entities,
+                        onTap: (entity) => _showCurrencyDetails(entity),
+                        );
                       case _ViewType.tabbedView:
                         return CurrencyTabbedListView();
                     }
                   }
+
+                  return Container();
                 },
               ),
             )));
+  }
+
+  void _showCurrencyDetails(CurrencyEntity entity) {
+    showModalBottomSheet(context: context, builder: (_) => CurrencyDetailSheet(entity));
   }
 }

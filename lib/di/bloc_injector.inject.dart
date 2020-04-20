@@ -5,7 +5,7 @@ import '../app/domain/domain_repo.dart' as _i4;
 import '../app/domain/use_case/fetch_market_details_use_case.dart' as _i5;
 import 'dart:async' as _i6;
 import '../app/app.dart' as _i7;
-import '../app/presentation/currency_list/currency_list_bloc.dart' as _i8;
+import '../app/presentation/currency_list_bloc.dart' as _i8;
 
 class BlocInjector$Injector implements _i1.BlocInjector {
   BlocInjector$Injector._(this._cryptoModule);

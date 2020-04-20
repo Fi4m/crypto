@@ -1,8 +1,0 @@
-{
-  "asset": "asset:crypto_currency/lib/app/presentation/current_detail/currency_detail_bloc.dart",
-  "summary": {
-    "injector": [],
-    "module": [],
-    "injectable": []
-  }
-}

@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 
 class CurrencyResponse {
   String coindcxName, baseCurrencyShortName, targetCurrencyShortName, targetCurrencyName, baseCurrencyName, symbol, ecode, pair, status;

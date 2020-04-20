@@ -11,7 +11,8 @@ class MarketDetailsEntity {
 }
 
 class CurrencyEntity {
-  String name, baseCurrencyShortName, targetCurrencyShortName, imageUrl, high, low, volume, lastPrice, bid, ask;
+  String name, imageUrl, high, low, volume, lastPrice, bid, ask;
+  String targetCurrencyName, baseCurrencyShortName, targetCurrencyShortName, baseCurrencyName;
   double change24hour;
 
   CurrencyEntity({
@@ -19,14 +20,17 @@ class CurrencyEntity {
     TickerResponse ticker,
   }) {
     name = currency.coindcxName;
-    baseCurrencyShortName = currency.baseCurrencyShortName;
-    imageUrl = CurrencyIconUrlGenerator.forCurrency(currency.targetCurrencyShortName);
     change24hour = double.parse(ticker.change24hour);
     high = ticker.high;
     low = ticker.low;
     volume = ticker.volume;
     lastPrice = ticker.lastPrice;
     bid = ticker.bid;
+
+    baseCurrencyShortName = currency.baseCurrencyShortName;
+    imageUrl = CurrencyIconUrlGenerator.forCurrency(currency.targetCurrencyShortName);
     targetCurrencyShortName = currency.targetCurrencyShortName;
+    baseCurrencyName = currency.baseCurrencyName;
+    targetCurrencyName = currency.targetCurrencyName;
   }
 }
