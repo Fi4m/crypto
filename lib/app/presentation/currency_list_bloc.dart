@@ -8,8 +8,7 @@ import 'package:rxdart/rxdart.dart';
 class CurrencyListBloc extends BaseBloc {
   
   FetchMarketDetailsUseCase fetchMarketDetailsUseCase;
-  MarketDetailsEntity marketDetails;
-  BehaviorSubject<List<CurrencyEntity>> filteredCurrencies;
+  BehaviorSubject<MarketDetailsEntity> marketDetails;
 
   @provide
   CurrencyListBloc(
@@ -19,25 +18,19 @@ class CurrencyListBloc extends BaseBloc {
   void fetchMarketDetails() async {
     try {
       final response = await fetchMarketDetailsUseCase.fetchMarketDetails();
-      marketDetails = response;
-      filteredCurrencies.sink.add(marketDetails.entities);
+      marketDetails.sink.add(response);
     } catch (e) {
       print(e);
     }
   }
 
-  void searchTextDidChange(String text) {
-    print(text);
-    filteredCurrencies.sink.add(marketDetails.entities.where((e) => e.name.toLowerCase().contains(text.toLowerCase())).toList());
-  }
-
   @override
   void init() {
-    filteredCurrencies = BehaviorSubject();
+    marketDetails = BehaviorSubject<MarketDetailsEntity>();
   }
 
   @override
   void dispose() {
-    filteredCurrencies.close();
+    marketDetails.close();
   }
 }

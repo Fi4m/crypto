@@ -8,7 +8,7 @@ import 'package:crypto_currency/app/presentation/widgets/currency_tabbed_list_vi
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-enum _ViewType { listView, tabbedView, searchView }
+enum _ViewType { listView, tabbedView }
 
 class CurrencyListScreen extends StatefulWidget {
   final CurrencyListBloc _bloc;
@@ -21,7 +21,6 @@ class CurrencyListScreen extends StatefulWidget {
 
 class _CurrencyListScreenState extends State<CurrencyListScreen>
     with SingleTickerProviderStateMixin {
-  final TextEditingController textEditingController = TextEditingController();
   TabController _tabController;
   _ViewType _viewType = _ViewType.listView;
 
@@ -34,8 +33,6 @@ class _CurrencyListScreenState extends State<CurrencyListScreen>
         case _ViewType.tabbedView:
           this._viewType = _ViewType.listView;
           break;
-        case _ViewType.searchView:
-          break;
       }
     });
   }
@@ -46,16 +43,11 @@ class _CurrencyListScreenState extends State<CurrencyListScreen>
 
     this.widget._bloc.init();
     this.widget._bloc.fetchMarketDetails();
-    
-    textEditingController.addListener(() {
-      widget._bloc.searchTextDidChange(textEditingController.text);
-    });
-    this.widget._bloc.filteredCurrencies.listen((currences) {
+    this.widget._bloc.marketDetails.listen((marketDetails) {
       _tabController = TabController(
-        initialIndex: 0,
-        length: widget._bloc.marketDetails.markets.length,
-        vsync: this,
-      );
+          initialIndex: 0,
+          length: marketDetails.markets.length,
+          vsync: this,);
     });
   }
 
@@ -70,7 +62,7 @@ class _CurrencyListScreenState extends State<CurrencyListScreen>
   Widget build(BuildContext context) {
     return CurrencyInheritedWidget(
         tabController: _tabController,
-        marketDetails: widget._bloc.marketDetails,
+        marketDetails: widget._bloc.marketDetails.value,
         onCurrencyListElementTap: (entity) => _showCurrencyDetails(entity),
         child: Scaffold(
             appBar: AppBar(
@@ -79,9 +71,18 @@ class _CurrencyListScreenState extends State<CurrencyListScreen>
               iconTheme: IconThemeData(
                 color: Colors.black,
               ),
-              title: _titleView,
-              leading: _leftBarButtonItem,
-              actions: _rightBarButtonItems,
+              title: Text(
+                "MARKETS",
+                style: TextStyle(color: Colors.white, fontSize: 17),
+              ),
+              actions: [
+                IconButton(
+                  icon: SvgPicture.asset(this._viewType == _ViewType.tabbedView
+                      ? Images.icList
+                      : Images.icTabbed),
+                  onPressed: () => this._toggleView(),
+                )
+              ],
               bottom: this._viewType == _ViewType.tabbedView
                   ? CurrencyTabBar()
                   : null,
@@ -89,7 +90,7 @@ class _CurrencyListScreenState extends State<CurrencyListScreen>
             body: Container(
               color: Color(0xFF0D111B),
               child: StreamBuilder(
-                stream: this.widget._bloc.filteredCurrencies,
+                stream: this.widget._bloc.marketDetails,
                 builder: (context, snapshot) {
                   if (snapshot.hasError) {
                     return Center(child: Text("Something went wrong"));
@@ -101,65 +102,24 @@ class _CurrencyListScreenState extends State<CurrencyListScreen>
                             valueColor:
                                 AlwaysStoppedAnimation<Color>(Colors.white)));
                   } else {
+                    MarketDetailsEntity marketDetails = snapshot.data;
                     switch (this._viewType) {
+                      case _ViewType.listView:
+                        return CurrencyListView(marketDetails.entities,
+                        onTap: (entity) => _showCurrencyDetails(entity),
+                        );
                       case _ViewType.tabbedView:
                         return CurrencyTabbedListView();
-                      default:
-                        return CurrencyListView(
-                          snapshot.data,
-                          onTap: (entity) => _showCurrencyDetails(entity),
-                        );
                     }
                   }
+
+                  return Container();
                 },
               ),
             )));
   }
 
-  Widget get _titleView => this._viewType == _ViewType.searchView
-      ? TextField(
-          controller: textEditingController,
-          cursorColor: Colors.white,
-          autofocus: true,
-          style: TextStyle(color: Colors.white),
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            hintText: "Search here",
-            hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),
-          ),
-        )
-      : Text(
-          "MARKETS",
-          style: TextStyle(color: Colors.white, fontSize: 17),
-        );
-
-  Widget get _leftBarButtonItem => this._viewType != _ViewType.searchView
-      ? IconButton(
-          icon: SvgPicture.asset(this._viewType == _ViewType.tabbedView
-              ? Images.icList
-              : Images.icTabbed),
-          onPressed: () => this._toggleView(),
-        )
-      : null;
-
-  List<Widget> get _rightBarButtonItems => [
-        IconButton(
-          icon: Icon(
-              this._viewType == _ViewType.searchView
-                  ? Icons.close
-                  : Icons.search,
-              color: Colors.white),
-          onPressed: () => this.setState(() {
-            if (this._viewType == _ViewType.searchView)
-              this._viewType = _ViewType.listView;
-            else
-              this._viewType = _ViewType.searchView;
-          }),
-        )
-      ];
-
   void _showCurrencyDetails(CurrencyEntity entity) {
-    showModalBottomSheet(
-        context: context, builder: (_) => CurrencyDetailSheet(entity));
+    showModalBottomSheet(context: context, builder: (_) => CurrencyDetailSheet(entity));
   }
 }
