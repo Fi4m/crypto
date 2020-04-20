@@ -1,5 +1,6 @@
-import 'package:crypto_currency/app/presentation/currency_list_bloc.dart';
-import 'package:crypto_currency/app/presentation/currency_list_screen.dart';
+import 'package:crypto_currency/app/presentation/home/currency_list_bloc.dart';
+import 'package:crypto_currency/app/presentation/home/currency_list_screen.dart';
+import 'package:crypto_currency/app/presentation/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:inject/inject.dart';
 
@@ -20,7 +21,12 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: CurrencyListScreen(currencyListBloc),
+      routes: _routes,
     );
   }
+
+  Map<String, WidgetBuilder> get _routes => {
+    "/": (_) => SplashScreen(),
+    "/home": (_) => CurrencyListScreen(currencyListBloc),
+  };
 }

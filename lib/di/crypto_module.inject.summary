@@ -69,7 +69,7 @@
             "kind": "method",
             "injectedType": {
               "lookupKey": {
-                "root": "asset:crypto_currency/lib/app/presentation/currency_list_bloc.dart#CurrencyListBloc",
+                "root": "asset:crypto_currency/lib/app/presentation/home/currency_list_bloc.dart#CurrencyListBloc",
                 "qualifier": null
               },
               "isProvider": false
